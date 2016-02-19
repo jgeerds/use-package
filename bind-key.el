@@ -225,7 +225,8 @@ function symbol (unquoted)."
       (error "If :menu-name is supplied, :prefix must be too"))
     (macroexp-progn
      (append
-      (when prefix-map
+      (when (and prefix-map
+                 (not (boundp prefix-map)))
         `((defvar ,prefix-map)
           ,@(when doc `((put ',prefix-map 'variable-documentation ,doc)))
           ,@(if menu-name
